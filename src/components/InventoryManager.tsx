@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { Product } from '@/types/product';
 import QuickAddForm from './QuickAddForm';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   Table, 
   TableBody, 
@@ -12,7 +10,7 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
-import { Package, CheckCircle, Clock, TrendingUp } from 'lucide-react';
+import { Package, CheckCircle, TrendingUp } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface InventoryManagerProps {
@@ -28,7 +26,7 @@ const InventoryManager = ({ products, onAddProduct, onMarkSold }: InventoryManag
 
   const handleMarkSold = (product: Product) => {
     onMarkSold(product.id);
-    toast.success(`"${product.name}" marked as sold!`);
+    toast.success(`"${product.name}" marked as sold`);
   };
 
   return (
@@ -36,82 +34,53 @@ const InventoryManager = ({ products, onAddProduct, onMarkSold }: InventoryManag
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl md:text-4xl font-medium text-foreground mb-4">
+          <h2 className="font-serif text-2xl md:text-3xl font-light text-foreground tracking-wide uppercase mb-4">
             Inventory Manager
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
-            Quickly add new items and manage your current stock. 
-            Built for speed when inventory moves fast.
+          <div className="section-divider-decorated mb-6" />
+          <p className="text-sm text-muted-foreground tracking-wide max-w-md mx-auto">
+            Quickly add and manage your current stock
           </p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12 max-w-2xl mx-auto">
+          <Card className="text-center">
             <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Available Items</p>
-                  <p className="text-3xl font-serif font-medium text-foreground">
-                    {availableProducts.length}
-                  </p>
-                </div>
-                <div className="p-3 rounded-full bg-amber/10">
-                  <Package className="h-6 w-6 text-amber" />
-                </div>
-              </div>
+              <Package className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
+              <p className="text-2xl font-serif text-foreground">{availableProducts.length}</p>
+              <p className="text-xs text-muted-foreground tracking-wide uppercase">Available</p>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="text-center">
             <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Items Sold</p>
-                  <p className="text-3xl font-serif font-medium text-foreground">
-                    {soldProducts.length}
-                  </p>
-                </div>
-                <div className="p-3 rounded-full bg-secondary">
-                  <CheckCircle className="h-6 w-6 text-primary" />
-                </div>
-              </div>
+              <CheckCircle className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
+              <p className="text-2xl font-serif text-foreground">{soldProducts.length}</p>
+              <p className="text-xs text-muted-foreground tracking-wide uppercase">Sold</p>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="text-center">
             <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Inventory Value</p>
-                  <p className="text-3xl font-serif font-medium text-foreground">
-                    ${totalValue.toLocaleString()}
-                  </p>
-                </div>
-                <div className="p-3 rounded-full bg-primary/10">
-                  <TrendingUp className="h-6 w-6 text-primary" />
-                </div>
-              </div>
+              <TrendingUp className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
+              <p className="text-2xl font-serif text-foreground">${totalValue.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground tracking-wide uppercase">Value</p>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Quick Add Form */}
           <QuickAddForm onAddProduct={onAddProduct} />
 
           {/* Current Inventory */}
           <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Clock className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <CardTitle className="font-serif text-xl">Current Stock</CardTitle>
-                  <CardDescription>Mark items as sold when they move</CardDescription>
-                </div>
-              </div>
+            <CardHeader className="text-center">
+              <CardTitle className="font-serif text-xl font-light tracking-wide uppercase">
+                Current Stock
+              </CardTitle>
+              <div className="section-divider mt-4" />
             </CardHeader>
             <CardContent>
               {availableProducts.length > 0 ? (
@@ -119,35 +88,36 @@ const InventoryManager = ({ products, onAddProduct, onMarkSold }: InventoryManag
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Item</TableHead>
-                        <TableHead>Price</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className="text-xs tracking-wide uppercase">Item</TableHead>
+                        <TableHead className="text-xs tracking-wide uppercase">Price</TableHead>
+                        <TableHead className="text-xs tracking-wide uppercase text-right">Action</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {availableProducts.slice(0, 6).map((product) => (
+                      {availableProducts.slice(0, 8).map((product) => (
                         <TableRow key={product.id}>
                           <TableCell>
                             <div className="flex items-center gap-3">
                               <img 
                                 src={product.image} 
                                 alt={product.name}
-                                className="w-10 h-10 rounded object-cover"
+                                className="w-10 h-10 object-cover"
                               />
                               <div>
-                                <p className="font-medium text-sm">{product.name}</p>
+                                <p className="text-sm font-medium">{product.name}</p>
                                 <p className="text-xs text-muted-foreground">
-                                  {product.category} {product.size && `• ${product.size}`}
+                                  {product.category} {product.size && `· ${product.size}`}
                                 </p>
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell>${product.price}</TableCell>
+                          <TableCell className="text-sm">${product.price}</TableCell>
                           <TableCell className="text-right">
                             <Button 
                               size="sm" 
                               variant="outline"
                               onClick={() => handleMarkSold(product)}
+                              className="text-xs"
                             >
                               Sold
                             </Button>
@@ -156,17 +126,17 @@ const InventoryManager = ({ products, onAddProduct, onMarkSold }: InventoryManag
                       ))}
                     </TableBody>
                   </Table>
-                  {availableProducts.length > 6 && (
-                    <p className="text-center text-sm text-muted-foreground mt-4">
-                      +{availableProducts.length - 6} more items
+                  {availableProducts.length > 8 && (
+                    <p className="text-center text-xs text-muted-foreground mt-4 tracking-wide">
+                      +{availableProducts.length - 8} more items
                     </p>
                   )}
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  <Package className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>No items in stock</p>
-                  <p className="text-sm">Add your first item using the form</p>
+                  <Package className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                  <p className="text-sm">No items in stock</p>
+                  <p className="text-xs">Add your first item</p>
                 </div>
               )}
             </CardContent>

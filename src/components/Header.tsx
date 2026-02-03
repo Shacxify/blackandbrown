@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Package, ShoppingBag, Menu, X } from 'lucide-react';
+import { Package, ShoppingBag, Menu, X, MapPin } from 'lucide-react';
 
 interface HeaderProps {
   mode: 'consumer' | 'business';
@@ -11,42 +11,55 @@ const Header = ({ mode, onModeChange }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <h1 className="font-serif text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
-              Black<span className="text-amber">&</span> Brown
-            </h1>
+    <header className="sticky top-0 z-50 bg-background border-b border-border">
+      {/* Top bar */}
+      <div className="border-b border-border">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-10 text-xs tracking-nav">
+            <div className="hidden md:flex items-center gap-6">
+              <a href="#" className="nav-link">Facebook</a>
+              <a href="#" className="nav-link">Pinterest</a>
+              <a href="https://instagram.com/blackandbrownsj" target="_blank" rel="noopener noreferrer" className="nav-link">Instagram</a>
+            </div>
+            <div className="flex items-center gap-4 ml-auto">
+              <button 
+                onClick={() => onModeChange(mode === 'consumer' ? 'business' : 'consumer')}
+                className="nav-link flex items-center gap-1"
+              >
+                {mode === 'consumer' ? (
+                  <>
+                    <Package className="h-3 w-3" />
+                    <span>Inventory</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="h-3 w-3" />
+                    <span>Shop</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Main header */}
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center py-8 md:py-12">
+          {/* Logo */}
+          <h1 className="logo-text text-2xl md:text-3xl text-foreground mb-4">
+            Black & Brown
+          </h1>
+          
+          {/* Decorative divider */}
+          <div className="section-divider-decorated mb-6" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <span className="text-sm text-muted-foreground font-medium">
-              Curated Vintage
-            </span>
-            <div className="h-4 w-px bg-border" />
-            <div className="flex items-center gap-2 bg-muted rounded-lg p-1">
-              <Button
-                variant={mode === 'consumer' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => onModeChange('consumer')}
-                className="gap-2"
-              >
-                <ShoppingBag className="h-4 w-4" />
-                Shop
-              </Button>
-              <Button
-                variant={mode === 'business' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => onModeChange('business')}
-                className="gap-2"
-              >
-                <Package className="h-4 w-4" />
-                Inventory
-              </Button>
-            </div>
+          <nav className="hidden md:flex items-center gap-10">
+            <a href="#" className="nav-link">Home</a>
+            <a href="#products" className="nav-link">Shop</a>
+            <a href="#sell" className="nav-link">Sell</a>
+            <a href="#location" className="nav-link">Location</a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -54,37 +67,19 @@ const Header = ({ mode, onModeChange }: HeaderProps) => {
             className="md:hidden p-2 text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-fade-in">
-            <div className="flex flex-col gap-2">
-              <Button
-                variant={mode === 'consumer' ? 'default' : 'ghost'}
-                onClick={() => {
-                  onModeChange('consumer');
-                  setMobileMenuOpen(false);
-                }}
-                className="justify-start gap-2"
-              >
-                <ShoppingBag className="h-4 w-4" />
-                Shop Collection
-              </Button>
-              <Button
-                variant={mode === 'business' ? 'default' : 'ghost'}
-                onClick={() => {
-                  onModeChange('business');
-                  setMobileMenuOpen(false);
-                }}
-                className="justify-start gap-2"
-              >
-                <Package className="h-4 w-4" />
-                Manage Inventory
-              </Button>
-            </div>
+          <div className="md:hidden py-6 border-t border-border animate-fade-in">
+            <nav className="flex flex-col items-center gap-4">
+              <a href="#" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</a>
+              <a href="#products" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Shop</a>
+              <a href="#sell" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sell</a>
+              <a href="#location" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Location</a>
+            </nav>
           </div>
         )}
       </div>

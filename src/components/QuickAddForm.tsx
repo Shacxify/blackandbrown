@@ -11,8 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Plus, Zap } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface QuickAddFormProps {
@@ -48,7 +48,6 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
       image: formData.image || 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=800&fit=crop',
     });
 
-    // Reset form
     setFormData({
       name: '',
       category: '' as Product['category'],
@@ -59,28 +58,23 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
       image: '',
     });
 
-    toast.success('Product added to inventory!');
+    toast.success('Item added to inventory');
   };
 
   return (
-    <Card className="border-2 border-dashed border-amber/30 bg-card/50">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <div className="p-2 rounded-lg bg-amber/10">
-            <Zap className="h-5 w-5 text-amber" />
-          </div>
-          <div>
-            <CardTitle className="font-serif text-xl">Quick Add</CardTitle>
-            <CardDescription>Add new items to inventory in seconds</CardDescription>
-          </div>
-        </div>
+    <Card className="border-border">
+      <CardHeader className="text-center">
+        <CardTitle className="font-serif text-xl font-light tracking-wide uppercase">
+          Quick Add Item
+        </CardTitle>
+        <div className="section-divider mt-4" />
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Item Name */}
             <div className="md:col-span-2">
-              <Label htmlFor="name">Item Name *</Label>
+              <Label htmlFor="name" className="text-xs tracking-wide uppercase">Item Name *</Label>
               <Input
                 id="name"
                 placeholder="Vintage Leather Jacket"
@@ -92,13 +86,13 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
 
             {/* Category */}
             <div>
-              <Label htmlFor="category">Category *</Label>
+              <Label htmlFor="category" className="text-xs tracking-wide uppercase">Category *</Label>
               <Select
                 value={formData.category}
                 onValueChange={(value) => setFormData({ ...formData, category: value })}
               >
                 <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
                   {CATEGORIES.filter(c => c !== 'All').map((category) => (
@@ -112,13 +106,13 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
 
             {/* Condition */}
             <div>
-              <Label htmlFor="condition">Condition *</Label>
+              <Label htmlFor="condition" className="text-xs tracking-wide uppercase">Condition *</Label>
               <Select
                 value={formData.condition}
                 onValueChange={(value) => setFormData({ ...formData, condition: value as Product['condition'] })}
               >
                 <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="Select condition" />
+                  <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
                   {CONDITIONS.map((condition) => (
@@ -132,7 +126,7 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
 
             {/* Price */}
             <div>
-              <Label htmlFor="price">Price ($) *</Label>
+              <Label htmlFor="price" className="text-xs tracking-wide uppercase">Price ($) *</Label>
               <Input
                 id="price"
                 type="number"
@@ -145,7 +139,7 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
 
             {/* Size */}
             <div>
-              <Label htmlFor="size">Size (optional)</Label>
+              <Label htmlFor="size" className="text-xs tracking-wide uppercase">Size</Label>
               <Input
                 id="size"
                 placeholder="M, L, 32, etc."
@@ -157,7 +151,7 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
 
             {/* Image URL */}
             <div className="md:col-span-2">
-              <Label htmlFor="image">Image URL (optional)</Label>
+              <Label htmlFor="image" className="text-xs tracking-wide uppercase">Image URL</Label>
               <Input
                 id="image"
                 type="url"
@@ -170,10 +164,10 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
 
             {/* Description */}
             <div className="md:col-span-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description" className="text-xs tracking-wide uppercase">Description</Label>
               <Textarea
                 id="description"
-                placeholder="Describe the item's unique features, condition details, measurements..."
+                placeholder="Describe the item..."
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className="mt-1.5 min-h-[80px]"
@@ -181,7 +175,7 @@ const QuickAddForm = ({ onAddProduct }: QuickAddFormProps) => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full gap-2" variant="vintage">
+          <Button type="submit" variant="minimal" className="w-full gap-2">
             <Plus className="h-4 w-4" />
             Add to Inventory
           </Button>
