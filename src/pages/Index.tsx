@@ -1,12 +1,50 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { Product } from '@/types/product';
+import { mockProducts } from '@/data/mockProducts';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import ProductGrid from '@/components/ProductGrid';
+import InventoryManager from '@/components/InventoryManager';
+import Footer from '@/components/Footer';
 
 const Index = () => {
+  const [mode, setMode] = useState<'consumer' | 'business'>('consumer');
+  const [products, setProducts] = useState<Product[]>(mockProducts);
+
+  const handleAddProduct = (newProduct: Omit<Product, 'id' | 'dateAdded' | 'sold'>) => {
+    const product: Product = {
+      ...newProduct,
+      id: `product-${Date.now()}`,
+      dateAdded: new Date(),
+      sold: false,
+    };
+    setProducts(prev => [product, ...prev]);
+  };
+
+  const handleMarkSold = (productId: string) => {
+    setProducts(prev => 
+      prev.map(p => p.id === productId ? { ...p, sold: true } : p)
+    );
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header mode={mode} onModeChange={setMode} />
+      
+      {mode === 'consumer' ? (
+        <>
+          <Hero />
+          <ProductGrid products={products} />
+        </>
+      ) : (
+        <InventoryManager 
+          products={products} 
+          onAddProduct={handleAddProduct}
+          onMarkSold={handleMarkSold}
+        />
+      )}
+      
+      <Footer />
     </div>
   );
 };
