@@ -17,31 +17,33 @@ const ProductGrid = ({ products }: ProductGridProps) => {
   const availableProducts = filteredProducts.filter(p => !p.sold);
 
   return (
-    <section id="products" className="py-16 md:py-24">
+    <section id="products" className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl md:text-4xl font-medium text-foreground mb-4">
-            Current Collection
+          <h2 className="font-serif text-2xl md:text-3xl font-light text-foreground tracking-wide uppercase mb-4">
+            Current Inventory
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
-            Browse our carefully curated selection of vintage treasures. 
-            Each piece tells a story.
+          <div className="section-divider-decorated mb-6" />
+          <p className="text-sm text-muted-foreground tracking-wide max-w-md mx-auto">
+            Browse our curated selection of vintage and consignment pieces
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
           {CATEGORIES.map((category) => (
-            <Button
+            <button
               key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
-              size="sm"
               onClick={() => setSelectedCategory(category)}
-              className="rounded-full"
+              className={`text-xs tracking-nav uppercase transition-all duration-200 pb-1 border-b ${
+                selectedCategory === category 
+                  ? 'text-foreground border-foreground' 
+                  : 'text-muted-foreground border-transparent hover:text-foreground'
+              }`}
             >
               {category}
-            </Button>
+            </button>
           ))}
         </div>
 
@@ -60,19 +62,19 @@ const ProductGrid = ({ products }: ProductGridProps) => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg">
-              No items available in this category right now.
+            <p className="font-serif text-lg text-muted-foreground tracking-wide">
+              No items available in this category
             </p>
-            <p className="text-muted-foreground">
-              Check back soon—our collection is always evolving!
+            <p className="text-sm text-muted-foreground mt-2">
+              Check back soon—new pieces arrive daily
             </p>
           </div>
         )}
 
         {/* Item count */}
         <div className="text-center mt-12">
-          <p className="text-sm text-muted-foreground">
-            Showing {availableProducts.length} of {products.filter(p => !p.sold).length} available pieces
+          <p className="text-xs text-muted-foreground tracking-wide uppercase">
+            {availableProducts.length} Items Available
           </p>
         </div>
       </div>

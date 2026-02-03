@@ -4,6 +4,8 @@ import { mockProducts } from '@/data/mockProducts';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ProductGrid from '@/components/ProductGrid';
+import LocationSection from '@/components/LocationSection';
+import SellSection from '@/components/SellSection';
 import InventoryManager from '@/components/InventoryManager';
 import Footer from '@/components/Footer';
 
@@ -35,6 +37,8 @@ const Index = () => {
         <>
           <Hero />
           <ProductGrid products={products} />
+          <SellSection onOpenInventory={() => setMode('business')} />
+          <LocationSection />
         </>
       ) : (
         <InventoryManager 
