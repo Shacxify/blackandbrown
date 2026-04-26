@@ -13,6 +13,7 @@ export interface Product {
   price: number;
   photos: string[];
   status: ProductStatus;
+  is_hot: boolean;
   created_by: string | null;
   created_at: string;
   updated_at: string;

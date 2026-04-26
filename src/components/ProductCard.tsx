@@ -14,6 +14,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const isSold = product.status === 'sold';
+  const isHot = product.is_hot && !isSold;
 
   return (
     <article className="group card-minimal overflow-hidden">
@@ -24,6 +25,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
+        {isHot && (
+          <div className="absolute top-3 left-3 bg-foreground text-background px-2 py-1 text-[10px] tracking-nav uppercase font-medium">
+            🔥 Hot
+          </div>
+        )}
         {isSold && (
           <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
             <span className="font-serif text-lg text-foreground tracking-wide uppercase">Sold</span>
