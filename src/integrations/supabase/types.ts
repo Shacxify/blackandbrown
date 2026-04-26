@@ -75,6 +75,7 @@ export type Database = {
           created_by: string | null
           description: string | null
           id: string
+          is_hot: boolean
           name: string
           photos: string[]
           price: number
@@ -91,6 +92,7 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          is_hot?: boolean
           name: string
           photos?: string[]
           price: number
@@ -107,6 +109,7 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          is_hot?: boolean
           name?: string
           photos?: string[]
           price?: number
