@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Package, ShoppingBag, Menu, X, LogIn, LogOut } from 'lucide-react';
+import { Package, ShoppingBag, Menu, X, LogIn, LogOut, BarChart3 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface HeaderProps {
@@ -45,10 +45,16 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
             </div>
             <div className="flex items-center gap-4 ml-auto">
               {user && isEmployee && (
-                <button onClick={() => signOut()} className="nav-link flex items-center gap-1">
-                  <LogOut className="h-3 w-3" />
-                  <span>Sign Out</span>
-                </button>
+                <>
+                  <Link to="/market-trends" className="nav-link flex items-center gap-1">
+                    <BarChart3 className="h-3 w-3" />
+                    <span>Market Trends</span>
+                  </Link>
+                  <button onClick={() => signOut()} className="nav-link flex items-center gap-1">
+                    <LogOut className="h-3 w-3" />
+                    <span>Sign Out</span>
+                  </button>
+                </>
               )}
               <button onClick={handlePortal} className="nav-link flex items-center gap-1">
                 {isEmployee ? (
