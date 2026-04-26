@@ -14,16 +14,171 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      price_submissions: {
+        Row: {
+          ai_estimate_high: number | null
+          ai_estimate_low: number | null
+          ai_reasoning: string | null
+          brand: string
+          category: string | null
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          id: string
+          photos: string[]
+          size: string
+          status: Database["public"]["Enums"]["submission_status"]
+          use_description: string
+        }
+        Insert: {
+          ai_estimate_high?: number | null
+          ai_estimate_low?: number | null
+          ai_reasoning?: string | null
+          brand: string
+          category?: string | null
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          id?: string
+          photos?: string[]
+          size: string
+          status?: Database["public"]["Enums"]["submission_status"]
+          use_description: string
+        }
+        Update: {
+          ai_estimate_high?: number | null
+          ai_estimate_low?: number | null
+          ai_reasoning?: string | null
+          brand?: string
+          category?: string | null
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          id?: string
+          photos?: string[]
+          size?: string
+          status?: Database["public"]["Enums"]["submission_status"]
+          use_description?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          ai_suggested_price: number | null
+          brand: string | null
+          category: string
+          condition: Database["public"]["Enums"]["product_condition"]
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          name: string
+          photos: string[]
+          price: number
+          size: string | null
+          status: Database["public"]["Enums"]["product_status"]
+          updated_at: string
+        }
+        Insert: {
+          ai_suggested_price?: number | null
+          brand?: string | null
+          category: string
+          condition?: Database["public"]["Enums"]["product_condition"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          photos?: string[]
+          price: number
+          size?: string | null
+          status?: Database["public"]["Enums"]["product_status"]
+          updated_at?: string
+        }
+        Update: {
+          ai_suggested_price?: number | null
+          brand?: string | null
+          category?: string
+          condition?: Database["public"]["Enums"]["product_condition"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          photos?: string[]
+          price?: number
+          size?: string | null
+          status?: Database["public"]["Enums"]["product_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "employee"
+      product_condition: "Excellent" | "Good" | "Fair"
+      product_status: "draft" | "published" | "sold"
+      submission_status: "pending" | "reviewed" | "declined"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +305,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "employee"],
+      product_condition: ["Excellent", "Good", "Fair"],
+      product_status: ["draft", "published", "sold"],
+      submission_status: ["pending", "reviewed", "declined"],
+    },
   },
 } as const
