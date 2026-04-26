@@ -26,8 +26,8 @@ const Footer = () => {
           <div className="section-divider my-6" />
 
           {/* Copyright */}
-          <p className="text-xs text-muted-foreground tracking-wide">
-            © {new Date().getFullYear()} Black & Brown. All rights reserved.
+          <p className="text-xs text-muted-foreground tracking-wide whitespace-pre-line">
+            © {new Date().getFullYear()} Black & Brown. All rights reserved.{"\n"}Design blessed by $$$.
           </p>
         </div>
       </div>
