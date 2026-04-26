@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ProductGrid from '@/components/ProductGrid';
+import RecentlySold from '@/components/RecentlySold';
 import LocationSection from '@/components/LocationSection';
 import SellSection from '@/components/SellSection';
 import Footer from '@/components/Footer';
@@ -14,6 +15,7 @@ const Index = () => {
       <Header />
       <Hero />
       <ProductGrid products={products} loading={loading} />
+      <RecentlySold />
       <SellSection />
       <LocationSection />
       <Footer />
