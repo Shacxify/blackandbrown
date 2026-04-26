@@ -6,51 +6,46 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
-const credSchema = z.object({
-  email: z.string().trim().email('Invalid email').max(255),
-  password: z.string().min(6, 'Password must be at least 6 characters').max(72),
-});
+const DEMO_EMAIL = 'admin@blackandbrown.demo';
 
 const Auth = () => {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('1234');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = credSchema.safeParse({ email, password });
-    if (!parsed.success) {
-      toast.error(parsed.error.errors[0].message);
-      return;
-    }
-
     setLoading(true);
+
+    // Map username -> internal email so Supabase auth still works under the hood
+    const email = username.trim().toLowerCase() === 'admin'
+      ? DEMO_EMAIL
+      : `${username.trim().toLowerCase()}@blackandbrown.demo`;
+
     try {
-      if (mode === 'signin') {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        toast.success('Welcome back');
-        navigate('/inventory');
-      } else {
-        const { error } = await supabase.auth.signUp({
+      let { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      // If the demo admin doesn't exist yet, create it on the fly
+      if (error && username.trim().toLowerCase() === 'admin') {
+        const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/inventory`,
-            data: { full_name: fullName || email },
-          },
+          options: { data: { full_name: 'Admin' } },
         });
-        if (error) throw error;
-        toast.success('Account created. An admin must grant employee access before you can manage inventory.');
-        navigate('/inventory');
+        if (signUpError) throw signUpError;
+        const retry = await supabase.auth.signInWithPassword({ email, password });
+        if (retry.error) throw retry.error;
+        error = null;
       }
+
+      if (error) throw error;
+
+      toast.success('Welcome back');
+      navigate('/inventory');
     } catch (err: any) {
-      toast.error(err.message || 'Authentication failed');
+      toast.error(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -68,30 +63,17 @@ const Auth = () => {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="font-serif text-xl font-light tracking-wide uppercase">
-              {mode === 'signin' ? 'Sign In' : 'Create Account'}
+              Sign In
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {mode === 'signup' && (
-                <div>
-                  <Label htmlFor="name" className="text-xs tracking-wide uppercase">Full Name</Label>
-                  <Input
-                    id="name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="mt-1.5"
-                    maxLength={100}
-                  />
-                </div>
-              )}
               <div>
-                <Label htmlFor="email" className="text-xs tracking-wide uppercase">Email</Label>
+                <Label htmlFor="username" className="text-xs tracking-wide uppercase">Username</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="mt-1.5"
                   required
                 />
@@ -108,18 +90,13 @@ const Auth = () => {
                 />
               </div>
               <Button type="submit" variant="minimal" className="w-full" disabled={loading}>
-                {loading ? '...' : mode === 'signin' ? 'Sign In' : 'Sign Up'}
+                {loading ? '...' : 'Sign In'}
               </Button>
             </form>
 
-            <div className="text-center mt-6">
-              <button
-                onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
-                className="text-xs tracking-nav uppercase text-muted-foreground hover:text-foreground"
-              >
-                {mode === 'signin' ? 'Need an account? Sign up' : 'Have an account? Sign in'}
-              </button>
-            </div>
+            <p className="text-center text-[10px] tracking-nav uppercase text-muted-foreground mt-6">
+              Demo · admin / 1234
+            </p>
           </CardContent>
         </Card>
 
