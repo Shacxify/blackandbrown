@@ -12,7 +12,7 @@ const DEMO_EMAIL = 'admin@blackandbrown.demo';
 const Auth = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('1234');
+  const [password, setPassword] = useState('123456789');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,7 +95,7 @@ const Auth = () => {
             </form>
 
             <p className="text-center text-[10px] tracking-nav uppercase text-muted-foreground mt-6">
-              Demo · admin / 1234
+              Demo · admin / 123456789
             </p>
           </CardContent>
         </Card>
