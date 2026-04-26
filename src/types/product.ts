@@ -1,17 +1,24 @@
+export type ProductStatus = 'draft' | 'published' | 'sold';
+export type ProductCondition = 'Excellent' | 'Good' | 'Fair';
+
 export interface Product {
   id: string;
   name: string;
+  description: string | null;
+  brand: string | null;
   category: string;
+  size: string | null;
+  condition: ProductCondition;
+  ai_suggested_price: number | null;
   price: number;
-  size?: string;
-  condition: 'Excellent' | 'Good' | 'Fair';
-  description: string;
-  image: string;
-  dateAdded: Date;
-  sold: boolean;
+  photos: string[];
+  status: ProductStatus;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
-export type ProductCategory = 
+export type ProductCategory =
   | 'All'
   | 'Tops'
   | 'Bottoms'
@@ -22,14 +29,7 @@ export type ProductCategory =
   | 'Bags';
 
 export const CATEGORIES: ProductCategory[] = [
-  'All',
-  'Tops',
-  'Bottoms',
-  'Dresses',
-  'Outerwear',
-  'Accessories',
-  'Shoes',
-  'Bags',
+  'All', 'Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Accessories', 'Shoes', 'Bags',
 ];
 
-export const CONDITIONS: Product['condition'][] = ['Excellent', 'Good', 'Fair'];
+export const CONDITIONS: ProductCondition[] = ['Excellent', 'Good', 'Fair'];

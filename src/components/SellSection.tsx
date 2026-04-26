@@ -1,10 +1,8 @@
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Sparkles } from 'lucide-react';
 
-interface SellSectionProps {
-  onOpenInventory: () => void;
-}
-
-const SellSection = ({ onOpenInventory }: SellSectionProps) => {
+const SellSection = () => {
   return (
     <section id="sell" className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -13,11 +11,11 @@ const SellSection = ({ onOpenInventory }: SellSectionProps) => {
             Sell With Us
           </h2>
           <div className="section-divider-decorated mb-10" />
-          
+
           <div className="space-y-6">
             <p className="text-sm text-muted-foreground tracking-wide leading-relaxed">
-              We buy quality vintage and contemporary clothing, shoes, and accessories. 
-              Bring in your gently used items during our buying hours for an on-the-spot evaluation.
+              We buy quality vintage and contemporary clothing, shoes, and accessories.
+              Get an instant AI estimate for your item, then bring it in to finalize.
             </p>
 
             <div className="section-divider" />
@@ -40,13 +38,16 @@ const SellSection = ({ onOpenInventory }: SellSectionProps) => {
               <h3 className="text-xs text-foreground tracking-nav uppercase font-medium mb-3">
                 Buying Hours
               </h3>
-              <p className="text-sm text-muted-foreground">Monday - Saturday</p>
-              <p className="text-sm text-muted-foreground">11am - 6:00pm</p>
+              <p className="text-sm text-muted-foreground">Monday – Saturday</p>
+              <p className="text-sm text-muted-foreground">11am – 6:00pm</p>
             </div>
 
-            <Button variant="minimal" onClick={onOpenInventory} className="mt-6">
-              Manage Inventory
-            </Button>
+            <Link to="/price-check">
+              <Button variant="minimal" className="mt-6 gap-2">
+                <Sparkles className="h-4 w-4" />
+                Get a Price Estimate
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
