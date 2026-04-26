@@ -1,66 +1,67 @@
-import { Product } from '@/types/product';
-import QuickAddForm from './QuickAddForm';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import ProductForm from './ProductForm';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import { Package, CheckCircle, TrendingUp } from 'lucide-react';
 import { toast } from 'sonner';
+import { useProducts } from '@/hooks/useProducts';
+import type { Product } from '@/types/product';
 
-interface InventoryManagerProps {
-  products: Product[];
-  onAddProduct: (product: Omit<Product, 'id' | 'dateAdded' | 'sold'>) => void;
-  onMarkSold: (productId: string) => void;
-}
+const placeholder = 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=200&h=200&fit=crop';
 
-const InventoryManager = ({ products, onAddProduct, onMarkSold }: InventoryManagerProps) => {
-  const availableProducts = products.filter(p => !p.sold);
-  const soldProducts = products.filter(p => p.sold);
-  const totalValue = availableProducts.reduce((sum, p) => sum + p.price, 0);
+const InventoryManager = () => {
+  const { products, refetch } = useProducts();
+  const available = products.filter((p) => p.status === 'published');
+  const drafts = products.filter((p) => p.status === 'draft');
+  const sold = products.filter((p) => p.status === 'sold');
+  const totalValue = available.reduce((s, p) => s + Number(p.price), 0);
 
-  const handleMarkSold = (product: Product) => {
-    onMarkSold(product.id);
-    toast.success(`"${product.name}" marked as sold`);
+  const setStatus = async (p: Product, status: Product['status']) => {
+    const { error } = await supabase.from('products').update({ status }).eq('id', p.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(
+      status === 'sold' ? `"${p.name}" marked sold` :
+      status === 'published' ? `"${p.name}" published` : 'Updated',
+    );
+    refetch();
   };
 
   return (
     <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="font-serif text-2xl md:text-3xl font-light text-foreground tracking-wide uppercase mb-4">
             Inventory Manager
           </h2>
           <div className="section-divider-decorated mb-6" />
           <p className="text-sm text-muted-foreground tracking-wide max-w-md mx-auto">
-            Quickly add and manage your current stock
+            Add new pieces with AI pricing assistance. Publish to push live to the shop.
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12 max-w-2xl mx-auto">
           <Card className="text-center">
             <CardContent className="pt-6">
               <Package className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
-              <p className="text-2xl font-serif text-foreground">{availableProducts.length}</p>
-              <p className="text-xs text-muted-foreground tracking-wide uppercase">Available</p>
+              <p className="text-2xl font-serif text-foreground">{available.length}</p>
+              <p className="text-xs text-muted-foreground tracking-wide uppercase">Live</p>
             </CardContent>
           </Card>
-          
           <Card className="text-center">
             <CardContent className="pt-6">
               <CheckCircle className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
-              <p className="text-2xl font-serif text-foreground">{soldProducts.length}</p>
+              <p className="text-2xl font-serif text-foreground">{sold.length}</p>
               <p className="text-xs text-muted-foreground tracking-wide uppercase">Sold</p>
             </CardContent>
           </Card>
-          
           <Card className="text-center">
             <CardContent className="pt-6">
               <TrendingUp className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
@@ -70,73 +71,83 @@ const InventoryManager = ({ products, onAddProduct, onMarkSold }: InventoryManag
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Quick Add Form */}
-          <QuickAddForm onAddProduct={onAddProduct} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <ProductForm onSaved={refetch} />
 
-          {/* Current Inventory */}
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="font-serif text-xl font-light tracking-wide uppercase">
-                Current Stock
+                Catalog
               </CardTitle>
               <div className="section-divider mt-4" />
             </CardHeader>
             <CardContent>
-              {availableProducts.length > 0 ? (
+              {products.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Package className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                  <p className="text-sm">No items yet</p>
+                </div>
+              ) : (
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
                       <TableRow>
                         <TableHead className="text-xs tracking-wide uppercase">Item</TableHead>
                         <TableHead className="text-xs tracking-wide uppercase">Price</TableHead>
+                        <TableHead className="text-xs tracking-wide uppercase">Status</TableHead>
                         <TableHead className="text-xs tracking-wide uppercase text-right">Action</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {availableProducts.slice(0, 8).map((product) => (
-                        <TableRow key={product.id}>
+                      {products.slice(0, 20).map((p) => (
+                        <TableRow key={p.id}>
                           <TableCell>
                             <div className="flex items-center gap-3">
-                              <img 
-                                src={product.image} 
-                                alt={product.name}
+                              <img
+                                src={p.photos[0] || placeholder}
+                                alt={p.name}
                                 className="w-10 h-10 object-cover"
                               />
                               <div>
-                                <p className="text-sm font-medium">{product.name}</p>
+                                <p className="text-sm font-medium">{p.name}</p>
                                 <p className="text-xs text-muted-foreground">
-                                  {product.category} {product.size && `· ${product.size}`}
+                                  {p.category}{p.size ? ` · ${p.size}` : ''}
                                 </p>
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell className="text-sm">${product.price}</TableCell>
-                          <TableCell className="text-right">
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              onClick={() => handleMarkSold(product)}
-                              className="text-xs"
-                            >
-                              Sold
-                            </Button>
+                          <TableCell className="text-sm">${Number(p.price).toFixed(0)}</TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className="text-[10px] tracking-wide uppercase">
+                              {p.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-right space-x-1">
+                            {p.status === 'draft' && (
+                              <Button size="sm" variant="outline" onClick={() => setStatus(p, 'published')} className="text-xs">
+                                Publish
+                              </Button>
+                            )}
+                            {p.status === 'published' && (
+                              <Button size="sm" variant="outline" onClick={() => setStatus(p, 'sold')} className="text-xs">
+                                Sold
+                              </Button>
+                            )}
+                            {p.status === 'sold' && (
+                              <Button size="sm" variant="ghost" onClick={() => setStatus(p, 'published')} className="text-xs">
+                                Relist
+                              </Button>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
-                  {availableProducts.length > 8 && (
+                  {products.length > 20 && (
                     <p className="text-center text-xs text-muted-foreground mt-4 tracking-wide">
-                      +{availableProducts.length - 8} more items
+                      +{products.length - 20} more items
                     </p>
                   )}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
-                  <Package className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                  <p className="text-sm">No items in stock</p>
-                  <p className="text-xs">Add your first item</p>
                 </div>
               )}
             </CardContent>
