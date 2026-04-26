@@ -7,7 +7,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Package, CheckCircle, TrendingUp } from 'lucide-react';
+import { Package, CheckCircle, TrendingUp, Flame } from 'lucide-react';
 import { toast } from 'sonner';
 import { useProducts } from '@/hooks/useProducts';
 import type { Product } from '@/types/product';
@@ -31,6 +31,17 @@ const InventoryManager = () => {
       status === 'sold' ? `"${p.name}" marked sold` :
       status === 'published' ? `"${p.name}" published` : 'Updated',
     );
+    refetch();
+  };
+
+  const toggleHot = async (p: Product) => {
+    const next = !p.is_hot;
+    const { error } = await supabase.from('products').update({ is_hot: next }).eq('id', p.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(next ? `"${p.name}" marked Hot 🔥` : `"${p.name}" unmarked`);
     refetch();
   };
 
@@ -121,8 +132,24 @@ const InventoryManager = () => {
                             <Badge variant="outline" className="text-[10px] tracking-wide uppercase">
                               {p.status}
                             </Badge>
+                            {p.is_hot && p.status === 'published' && (
+                              <Badge variant="default" className="ml-1 text-[10px] tracking-wide uppercase">
+                                🔥 Hot
+                              </Badge>
+                            )}
                           </TableCell>
                           <TableCell className="text-right space-x-1">
+                            {p.status === 'published' && (
+                              <Button
+                                size="sm"
+                                variant={p.is_hot ? 'default' : 'ghost'}
+                                onClick={() => toggleHot(p)}
+                                className="text-xs"
+                                title={p.is_hot ? 'Unmark Hot' : 'Mark Hot'}
+                              >
+                                <Flame className="h-3 w-3" />
+                              </Button>
+                            )}
                             {p.status === 'draft' && (
                               <Button size="sm" variant="outline" onClick={() => setStatus(p, 'published')} className="text-xs">
                                 Publish

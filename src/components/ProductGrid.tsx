@@ -12,9 +12,14 @@ const ProductGrid = ({ products, loading }: ProductGridProps) => {
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('All');
 
   const visible = products.filter((p) => p.status === 'published');
-  const filtered = selectedCategory === 'All'
+  const filteredRaw = selectedCategory === 'All'
     ? visible
     : visible.filter((p) => p.category === selectedCategory);
+  // Hot items first, then by recency (preserves existing order)
+  const filtered = [...filteredRaw].sort((a, b) => {
+    if (a.is_hot === b.is_hot) return 0;
+    return a.is_hot ? -1 : 1;
+  });
 
   return (
     <section id="products" className="py-16 md:py-24 bg-secondary/30">
@@ -70,9 +75,12 @@ const ProductGrid = ({ products, loading }: ProductGridProps) => {
           </div>
         )}
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 space-y-3">
           <p className="text-xs text-muted-foreground tracking-wide uppercase">
             {filtered.length} Items Available
+          </p>
+          <p className="text-[11px] text-muted-foreground/80 italic max-w-md mx-auto leading-relaxed">
+            Disclaimer: Online inventory updates throughout the day and may not reflect the exact in-store count. For real-time availability, please call or visit the shop.
           </p>
         </div>
       </div>

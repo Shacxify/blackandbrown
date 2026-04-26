@@ -740,9 +740,14 @@ const MarketTrends = () => {
             </TabsContent>
           </Tabs>
 
-          <p className="text-[10px] text-muted-foreground/60 text-center mt-12 tracking-wide uppercase">
-            Demo data shown for illustrative purposes
-          </p>
+          <div className="mt-12 space-y-2 text-center">
+            <p className="text-[10px] text-muted-foreground/60 tracking-wide uppercase">
+              Demo data shown for illustrative purposes
+            </p>
+            <p className="text-[11px] text-muted-foreground/80 italic max-w-xl mx-auto leading-relaxed">
+              Disclaimer: In-person sales may vary in price from figures shown here. Tagged prices in store reflect current promotions, negotiations, and condition adjustments at the time of sale.
+            </p>
+          </div>
         </div>
       </section>
 
