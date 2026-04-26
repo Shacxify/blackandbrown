@@ -74,6 +74,7 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/#products" className="nav-link">Shop</Link>
             <Link to="/price-check" className="nav-link">Sell</Link>
+            <Link to="/about" className="nav-link">About</Link>
             <Link to="/#location" className="nav-link">Location</Link>
           </nav>
 
@@ -91,6 +92,7 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
               <Link to="/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
               <Link to="/#products" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
               <Link to="/price-check" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sell</Link>
+              <Link to="/about" className="nav-link" onClick={() => setMobileMenuOpen(false)}>About</Link>
               <Link to="/#location" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Location</Link>
             </nav>
           </div>
