@@ -40,11 +40,11 @@ export const useAuth = () => {
     const { data } = await supabase
       .from('user_roles')
       .select('role')
-      .eq('user_id', userId)
-      .order('role', { ascending: true }) // admin sorts before employee
-      .limit(1)
-      .maybeSingle();
-    setRole((data?.role as Role) ?? null);
+      .eq('user_id', userId);
+    const roles = (data ?? []).map((r) => r.role as string);
+    if (roles.includes('admin')) setRole('admin');
+    else if (roles.includes('employee')) setRole('employee');
+    else setRole(null);
   };
 
   const signOut = async () => {
