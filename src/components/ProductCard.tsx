@@ -24,6 +24,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          onError={(e) => {
+            const img = e.currentTarget;
+            if (img.src !== placeholder) img.src = placeholder;
+          }}
         />
         {isHot && (
           <div className="absolute top-3 left-3 bg-foreground text-background px-2 py-1 text-[10px] tracking-nav uppercase font-medium">
