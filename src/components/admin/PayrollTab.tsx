@@ -13,7 +13,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Trash2, Check } from 'lucide-react';
 import { toast } from 'sonner';
-import type { ManagedUser } from './EmployeesTab';
+import { displayName, type ManagedUser } from './EmployeesTab';
 
 interface PayrollEntry {
   id: string;
@@ -58,7 +58,7 @@ const PayrollTab = ({ employees }: Props) => {
 
   const employeeName = (id: string) => {
     const u = employees.find((e) => e.id === id);
-    return u ? u.email.split('@')[0] : id.slice(0, 8);
+    return u ? displayName(u) : id.slice(0, 8);
   };
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -122,7 +122,7 @@ const PayrollTab = ({ employees }: Props) => {
                 <SelectTrigger className="mt-1.5"><SelectValue placeholder="Select employee" /></SelectTrigger>
                 <SelectContent>
                   {employees.map((u) => (
-                    <SelectItem key={u.id} value={u.id}>{u.email.split('@')[0]}</SelectItem>
+                    <SelectItem key={u.id} value={u.id}>{displayName(u)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -196,7 +196,7 @@ const PayrollTab = ({ employees }: Props) => {
               <TableBody>
                 {entries.map((e) => (
                   <TableRow key={e.id}>
-                    <TableCell className="font-mono text-xs">{employeeName(e.employee_id)}</TableCell>
+                    <TableCell className="text-xs">{employeeName(e.employee_id)}</TableCell>
                     <TableCell className="text-xs">{e.period_start} → {e.period_end}</TableCell>
                     <TableCell className="text-xs">{Number(e.hours_worked)} × ${Number(e.hourly_rate).toFixed(2)}</TableCell>
                     <TableCell className="text-xs font-medium">${Number(e.gross_pay).toFixed(2)}</TableCell>
