@@ -137,7 +137,8 @@ const EmployeesTab = ({ users, listLoading, reload }: Props) => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-xs tracking-wide uppercase">User</TableHead>
+                  <TableHead className="text-xs tracking-wide uppercase">Name</TableHead>
+                  <TableHead className="text-xs tracking-wide uppercase">Username</TableHead>
                   <TableHead className="text-xs tracking-wide uppercase">Role</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
@@ -148,7 +149,8 @@ const EmployeesTab = ({ users, listLoading, reload }: Props) => {
                   const isSelf = u.id === user?.id;
                   return (
                     <TableRow key={u.id}>
-                      <TableCell className="font-mono text-xs">{username}</TableCell>
+                      <TableCell className="text-xs">{u.full_name || <span className="text-muted-foreground italic">—</span>}</TableCell>
+                      <TableCell className="font-mono text-xs text-muted-foreground">{username}</TableCell>
                       <TableCell>
                         {u.roles.map((r) => (
                           <Badge key={r} variant={r === 'admin' ? 'default' : 'secondary'}
