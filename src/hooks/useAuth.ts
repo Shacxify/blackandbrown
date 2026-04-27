@@ -57,6 +57,7 @@ export const useAuth = () => {
     user,
     role,
     isEmployee: role === 'employee' || role === 'admin',
+    isAdmin: role === 'admin',
     loading,
     signOut,
   };

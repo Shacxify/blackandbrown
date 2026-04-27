@@ -11,8 +11,8 @@ const DEMO_EMAIL = 'admin@blackandbrown.demo';
 
 const Auth = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('123456789');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,21 +25,7 @@ const Auth = () => {
       : `${username.trim().toLowerCase()}@blackandbrown.demo`;
 
     try {
-      let { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      // If the demo admin doesn't exist yet, create it on the fly
-      if (error && username.trim().toLowerCase() === 'admin') {
-        const { error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: { full_name: 'Admin' } },
-        });
-        if (signUpError) throw signUpError;
-        const retry = await supabase.auth.signInWithPassword({ email, password });
-        if (retry.error) throw retry.error;
-        error = null;
-      }
-
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
       toast.success('Welcome back');
@@ -95,7 +81,7 @@ const Auth = () => {
             </form>
 
             <p className="text-center text-[10px] tracking-nav uppercase text-muted-foreground mt-6">
-              Demo · admin / 123456789
+              Authorized personnel only
             </p>
           </CardContent>
         </Card>

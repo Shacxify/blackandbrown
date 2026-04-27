@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Package, ShoppingBag, Menu, X, LogIn, LogOut, BarChart3 } from 'lucide-react';
+import { Package, ShoppingBag, Menu, X, LogIn, LogOut, BarChart3, Shield } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface HeaderProps {
@@ -12,7 +12,7 @@ interface HeaderProps {
 const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { isEmployee, user, signOut } = useAuth();
+  const { isEmployee, isAdmin, user, signOut } = useAuth();
 
   const handlePortal = () => {
     if (isEmployee) {
@@ -50,6 +50,12 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
                     <BarChart3 className="h-3 w-3" />
                     <span>Market Trends</span>
                   </Link>
+                  {isAdmin && (
+                    <Link to="/admin" className="nav-link flex items-center gap-1">
+                      <Shield className="h-3 w-3" />
+                      <span>Admin</span>
+                    </Link>
+                  )}
                   <button onClick={() => signOut()} className="nav-link flex items-center gap-1">
                     <LogOut className="h-3 w-3" />
                     <span>Sign Out</span>
