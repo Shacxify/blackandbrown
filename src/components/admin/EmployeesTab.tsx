@@ -18,9 +18,13 @@ import { toast } from 'sonner';
 export interface ManagedUser {
   id: string;
   email: string;
+  full_name?: string;
   created_at: string;
   roles: string[];
 }
+
+export const displayName = (u: ManagedUser) =>
+  (u.full_name && u.full_name.trim()) || u.email.split('@')[0];
 
 interface Props {
   users: ManagedUser[];
