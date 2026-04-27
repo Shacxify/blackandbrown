@@ -81,7 +81,7 @@ const Auth = () => {
             </form>
 
             <p className="text-center text-[10px] tracking-nav uppercase text-muted-foreground mt-6">
-              Demo · admin / 123456789
+              Authorized personnel only
             </p>
           </CardContent>
         </Card>
