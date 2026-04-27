@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      payroll_entries: {
+        Row: {
+          created_at: string
+          employee_id: string
+          gross_pay: number
+          hourly_rate: number
+          hours_worked: number
+          id: string
+          notes: string | null
+          paid: boolean
+          paid_at: string | null
+          period_end: string
+          period_start: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          employee_id: string
+          gross_pay?: number
+          hourly_rate?: number
+          hours_worked?: number
+          id?: string
+          notes?: string | null
+          paid?: boolean
+          paid_at?: string | null
+          period_end: string
+          period_start: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          employee_id?: string
+          gross_pay?: number
+          hourly_rate?: number
+          hours_worked?: number
+          id?: string
+          notes?: string | null
+          paid?: boolean
+          paid_at?: string | null
+          period_end?: string
+          period_start?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       price_submissions: {
         Row: {
           ai_estimate_high: number | null
@@ -139,6 +184,42 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      shifts: {
+        Row: {
+          created_at: string
+          employee_id: string
+          end_time: string
+          id: string
+          notes: string | null
+          role: string | null
+          shift_date: string
+          start_time: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          employee_id: string
+          end_time: string
+          id?: string
+          notes?: string | null
+          role?: string | null
+          shift_date: string
+          start_time: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          employee_id?: string
+          end_time?: string
+          id?: string
+          notes?: string | null
+          role?: string | null
+          shift_date?: string
+          start_time?: string
           updated_at?: string
         }
         Relationships: []
