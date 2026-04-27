@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Sparkles } from 'lucide-react';
 
 const Hero = () => {
   const scrollToProducts = () => {
@@ -19,9 +21,17 @@ const Hero = () => {
           <p className="text-sm md:text-base text-muted-foreground tracking-wide leading-relaxed mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
             Shop our latest arrivals below or visit us in store to experience the collection in person.
           </p>
-          <Button variant="minimal" size="lg" onClick={scrollToProducts} className="animate-fade-up" style={{ animationDelay: '0.3s' }}>
-            Shop the Collection
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 items-center justify-center animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <Button variant="minimal" size="lg" onClick={scrollToProducts}>
+              Shop the Collection
+            </Button>
+            <Link to="/price-check">
+              <Button variant="outline" size="lg" className="gap-2">
+                <Sparkles className="h-4 w-4" />
+                Get a Price Estimate
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
