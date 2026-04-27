@@ -11,8 +11,11 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     // Set up listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      if (!mounted) return;
       setSession(newSession);
       setUser(newSession?.user ?? null);
       if (newSession?.user) {
@@ -23,17 +26,22 @@ export const useAuth = () => {
       }
     });
 
-    // Then fetch initial session
-    supabase.auth.getSession().then(({ data: { session: initial } }) => {
+    // Then fetch initial session — wait for role before clearing loading
+    (async () => {
+      const { data: { session: initial } } = await supabase.auth.getSession();
+      if (!mounted) return;
       setSession(initial);
       setUser(initial?.user ?? null);
       if (initial?.user) {
-        fetchRole(initial.user.id);
+        await fetchRole(initial.user.id);
       }
-      setLoading(false);
-    });
+      if (mounted) setLoading(false);
+    })();
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const fetchRole = async (userId: string) => {
