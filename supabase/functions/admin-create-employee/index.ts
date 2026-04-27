@@ -54,12 +54,18 @@ Deno.serve(async (req) => {
       if (rErr) throw rErr;
 
       const userIds = [...new Set((roles ?? []).map((r) => r.user_id))];
+      const { data: profiles } = await admin
+        .from("profiles")
+        .select("id, full_name, email")
+        .in("id", userIds.length ? userIds : ["00000000-0000-0000-0000-000000000000"]);
       const enriched = await Promise.all(
         userIds.map(async (id) => {
           const { data } = await admin.auth.admin.getUserById(id);
+          const profile = (profiles ?? []).find((p) => p.id === id);
           return {
             id,
-            email: data.user?.email ?? "",
+            email: data.user?.email ?? profile?.email ?? "",
+            full_name: profile?.full_name ?? "",
             created_at: data.user?.created_at ?? "",
             roles: (roles ?? []).filter((r) => r.user_id === id).map((r) => r.role),
           };
