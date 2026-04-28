@@ -41,7 +41,7 @@ Deno.serve(async (req) => {
     const userContent: Array<{ type: string; text?: string; image_url?: { url: string } }> = [
       {
         type: "text",
-        text: `Estimate the resale value (in USD) of this second-hand clothing item at a curated vintage shop in San Jose, California (Black & Brown).
+        text: `Estimate the resale value (in USD) of this second-hand clothing item at Black & Brown, a vintage shop in San Jose, California.
 
 Item details:
 - Brand: ${brand}
@@ -50,9 +50,14 @@ Item details:
 - Customer description of use/condition: ${use}
 - Additional notes: ${notes || "(none)"}
 
+Pricing reference points to anchor your estimate:
+- Black & Brown's own buying history and resale prices for similar items.
+- Going rates at other San Jose vintage and thrift stores (e.g. Moon Zooom, Mr. Vintage, Crossroads Trading, Buffalo Exchange San Jose, local Goodwill and Savers stores) for comparable brands, eras, and conditions.
+- Current local secondhand demand in the South Bay / Bay Area market.
+
 Look closely at any provided photos and assess: visible wear, fabric quality, era/style, current resale demand, and brand desirability.
 
-Respond by calling the provide_estimate tool with a low-end and high-end USD price, the apparent condition (Excellent / Good / Fair), and a short 2-3 sentence reasoning the customer can read.`,
+Respond by calling the provide_estimate tool with a low-end and high-end USD price, the apparent condition (Excellent / Good / Fair), and a short 2-3 sentence customer-facing reasoning. In the reasoning, do NOT mention AI, models, or that this was generated automatically — write as if a shop buyer is explaining the price.`,
       },
     ];
 
@@ -66,7 +71,7 @@ Respond by calling the provide_estimate tool with a low-end and high-end USD pri
         {
           role: "system",
           content:
-            "You are a vintage clothing pricing expert for Black & Brown, a curated thrift store. You give fair, honest resale estimates. Always call the provide_estimate tool — never reply in plain text.",
+            "You are a vintage clothing buyer for Black & Brown in San Jose. Price items based on the shop's own buying history and what comparable San Jose / Bay Area vintage and thrift stores pay and resell for. Give fair, honest estimates. Never mention AI, automation, or that this is a generated estimate. Always call the provide_estimate tool — never reply in plain text.",
         },
         { role: "user", content: userContent },
       ],
