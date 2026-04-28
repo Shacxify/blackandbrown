@@ -77,11 +77,11 @@ Deno.serve(async (req) => {
         {
           role: "system",
           content:
-            "You write short, refined buying-guide blurbs for Black & Brown, a curated vintage shop in San Jose. Keep voice minimalist, warm, and confident. No emojis. No hashtags.",
+            "You write terse, cut-and-dry buying lists for Black & Brown, a vintage shop in San Jose. No fluff, no marketing language, no emojis, no hashtags. Just state plainly what is being bought.",
         },
         {
           role: "user",
-          content: `Summarize the following admin keywords into a brief "What We're Looking For Now" blurb (2 short sentences, max 220 characters). Make it feel inviting to sellers.\n\nKeywords:\n${keywords}`,
+          content: `Turn the following keywords into a short, direct list of what we are currently buying. Format as a single line of comma-separated items, or two short clipped sentences. Max 200 characters. No greetings, no adjectives like "amazing" or "curated", no calls to action. Just the items/categories.\n\nKeywords:\n${keywords}`,
         },
       ],
     };

@@ -88,7 +88,7 @@ const LookingForTab = () => {
               maxLength={1000}
             />
             <p className="text-[11px] text-muted-foreground mt-1">
-              Separate ideas with commas. AI will summarize into a customer-friendly blurb.
+              Separate ideas with commas. Will be summarized into a short customer blurb.
             </p>
           </div>
 

@@ -164,7 +164,7 @@ const PriceCheck = () => {
             </h2>
             <div className="section-divider-decorated mb-6" />
             <p className="text-sm text-muted-foreground tracking-wide max-w-md mx-auto">
-              Share a few details and photos. Our AI will estimate what your piece could be worth at Black & Brown.
+              Share a few details and photos. We'll send back an estimate of what your piece could be worth at Black & Brown.
               Bring it in to finalize the deal in person.
             </p>
           </div>

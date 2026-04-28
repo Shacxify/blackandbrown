@@ -16,7 +16,7 @@ const SellSection = () => {
           <div className="space-y-6">
             <p className="text-sm text-muted-foreground tracking-wide leading-relaxed">
               We buy quality vintage and contemporary clothing, shoes, and accessories.
-              Get an instant AI estimate for your item, then bring it in to finalize.
+              Get a price estimate online, then bring it in to finalize.
             </p>
 
             <LookingForBanner variant="inline" />
