@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.admin-create-employee]
 verify_jwt = true
+
+[functions.summarize-looking-for]
+verify_jwt = true

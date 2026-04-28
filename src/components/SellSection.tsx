@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
+import LookingForBanner from '@/components/LookingForBanner';
 
 const SellSection = () => {
   return (
@@ -17,6 +18,8 @@ const SellSection = () => {
               We buy quality vintage and contemporary clothing, shoes, and accessories.
               Get an instant AI estimate for your item, then bring it in to finalize.
             </p>
+
+            <LookingForBanner variant="inline" />
 
             <div className="section-divider" />
 
