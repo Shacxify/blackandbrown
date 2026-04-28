@@ -19,7 +19,7 @@ export const useLookingFor = () => {
         .eq('key', 'looking_for')
         .maybeSingle();
       if (!mounted) return;
-      const v = (row?.value ?? null) as LookingForValue | null;
+      const v = (row?.value ?? null) as unknown as LookingForValue | null;
       setData(v && (v.summary || v.keywords) ? v : null);
       setLoading(false);
     })();
