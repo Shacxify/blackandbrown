@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Package, BarChart3, Shield, LogOut, Home } from 'lucide-react';
+import { Package, BarChart3, Shield, LogOut, Home, LayoutDashboard } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -23,6 +23,7 @@ export const EmployeeSidebar = () => {
   const { isAdmin, signOut } = useAuth();
 
   const items = [
+    { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
     { title: 'Inventory', url: '/inventory', icon: Package },
     { title: 'Market Trends', url: '/market-trends', icon: BarChart3 },
     ...(isAdmin ? [{ title: 'Admin Panel', url: '/admin', icon: Shield }] : []),

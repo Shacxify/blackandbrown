@@ -29,7 +29,7 @@ const Auth = () => {
       if (error) throw error;
 
       toast.success('Welcome back');
-      navigate('/inventory');
+      navigate('/dashboard');
     } catch (err: any) {
       toast.error(err.message || 'Login failed');
     } finally {
