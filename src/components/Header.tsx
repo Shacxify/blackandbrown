@@ -55,7 +55,7 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
                 Instagram
               </a>
             </div>
-            <div className="flex items-center gap-4 ml-auto">
+            <div className="hidden md:flex items-center gap-4 ml-auto">
               {user && isEmployee && (
                 <>
                   <Link to="/market-trends" className="nav-link flex items-center gap-1">
