@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
-import { Package, BarChart3, Shield, Calendar, DollarSign, Users, Sparkles, Tag } from 'lucide-react';
+import { Package, BarChart3, Shield, Calendar, DollarSign, Users, Tag } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import EmployeeShell from '@/components/employee/EmployeeShell';
@@ -101,7 +101,7 @@ const Dashboard = () => {
           { title: 'Schedule', desc: 'Plan the week', url: '/admin?tab=schedule', icon: Calendar },
           { title: 'Payroll', desc: 'Hours and pay periods', url: '/admin?tab=payroll', icon: DollarSign },
           { title: 'Employees', desc: 'Team roster & access', url: '/admin?tab=employees', icon: Users },
-          { title: 'Looking For', desc: 'Update buying focus', url: '/admin?tab=looking-for', icon: Sparkles },
+          { title: 'Looking For', desc: 'Update buying focus', url: '/admin?tab=looking-for', icon: Tag },
           { title: 'Admin Panel', desc: 'All controls', url: '/admin', icon: Shield },
         ]
       : []),

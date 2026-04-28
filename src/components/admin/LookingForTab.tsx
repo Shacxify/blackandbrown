@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { Loader2, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const LookingForTab = () => {
   const [keywords, setKeywords] = useState('');
@@ -102,7 +102,7 @@ const LookingForTab = () => {
               {saving ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Working...</>
               ) : (
-                <><Sparkles className="h-4 w-4" /> Generate & Publish</>
+                <>Generate & Publish</>
               )}
             </Button>
             {summary && (

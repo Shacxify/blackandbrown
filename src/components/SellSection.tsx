@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Sparkles } from 'lucide-react';
 import LookingForBanner from '@/components/LookingForBanner';
 
 const SellSection = () => {
@@ -46,8 +45,7 @@ const SellSection = () => {
             </div>
 
             <Link to="/price-check">
-              <Button variant="minimal" className="mt-6 gap-2">
-                <Sparkles className="h-4 w-4" />
+              <Button variant="minimal" className="mt-6">
                 Get a Price Estimate
               </Button>
             </Link>
