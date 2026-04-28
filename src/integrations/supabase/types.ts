@@ -245,6 +245,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_permissions: {
+        Row: {
+          granted_at: string
+          granted_by: string | null
+          id: string
+          permission: Database["public"]["Enums"]["app_permission"]
+          user_id: string
+        }
+        Insert: {
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          permission: Database["public"]["Enums"]["app_permission"]
+          user_id: string
+        }
+        Update: {
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          permission?: Database["public"]["Enums"]["app_permission"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           role: Database["public"]["Enums"]["app_role"]
@@ -265,6 +289,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      has_permission: {
+        Args: {
+          _permission: Database["public"]["Enums"]["app_permission"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -274,6 +305,11 @@ export type Database = {
       }
     }
     Enums: {
+      app_permission:
+        | "post_to_feed"
+        | "use_estimation"
+        | "manage_payroll"
+        | "manage_schedule"
       app_role: "admin" | "employee"
       product_condition: "Excellent" | "Good" | "Fair"
       product_status: "draft" | "published" | "sold"
@@ -405,6 +441,12 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_permission: [
+        "post_to_feed",
+        "use_estimation",
+        "manage_payroll",
+        "manage_schedule",
+      ],
       app_role: ["admin", "employee"],
       product_condition: ["Excellent", "Good", "Fair"],
       product_status: ["draft", "published", "sold"],
