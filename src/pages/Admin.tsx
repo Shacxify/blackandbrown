@@ -54,8 +54,9 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="employees" className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-2 md:grid-cols-5 mb-8 h-auto">
             <TabsTrigger value="employees" className="text-xs tracking-wide uppercase">Employees</TabsTrigger>
+            <TabsTrigger value="permissions" className="text-xs tracking-wide uppercase">Permissions</TabsTrigger>
             <TabsTrigger value="schedule" className="text-xs tracking-wide uppercase">Schedule</TabsTrigger>
             <TabsTrigger value="payroll" className="text-xs tracking-wide uppercase">Payroll</TabsTrigger>
             <TabsTrigger value="looking-for" className="text-xs tracking-wide uppercase">Looking For</TabsTrigger>
@@ -63,6 +64,9 @@ const Admin = () => {
 
           <TabsContent value="employees">
             <EmployeesTab users={users} listLoading={listLoading} reload={loadUsers} />
+          </TabsContent>
+          <TabsContent value="permissions">
+            <PermissionsTab employees={users} />
           </TabsContent>
           <TabsContent value="schedule">
             <ScheduleTab employees={users} />
