@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import EmployeesTab, { type ManagedUser } from '@/components/admin/EmployeesTab';
 import ScheduleTab from '@/components/admin/ScheduleTab';
 import PayrollTab from '@/components/admin/PayrollTab';
+import LookingForTab from '@/components/admin/LookingForTab';
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -54,10 +55,11 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="employees" className="w-full">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8">
             <TabsTrigger value="employees" className="text-xs tracking-wide uppercase">Employees</TabsTrigger>
             <TabsTrigger value="schedule" className="text-xs tracking-wide uppercase">Schedule</TabsTrigger>
             <TabsTrigger value="payroll" className="text-xs tracking-wide uppercase">Payroll</TabsTrigger>
+            <TabsTrigger value="looking-for" className="text-xs tracking-wide uppercase">Looking For</TabsTrigger>
           </TabsList>
 
           <TabsContent value="employees">
@@ -68,6 +70,9 @@ const Admin = () => {
           </TabsContent>
           <TabsContent value="payroll">
             <PayrollTab employees={users} />
+          </TabsContent>
+          <TabsContent value="looking-for">
+            <LookingForTab />
           </TabsContent>
         </Tabs>
       </main>
