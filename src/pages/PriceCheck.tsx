@@ -86,18 +86,29 @@ const PriceCheck = () => {
         const file = files[i];
         const ext = file.name.split('.').pop() || 'jpg';
         const path = `${folder}/photo-${i}.${ext}`;
-        const { error: upErr } = await supabase.storage
+        const { data: upData, error: upErr } = await supabase.storage
           .from('submission-photos')
           .upload(path, file, { contentType: file.type, upsert: false });
         if (upErr) throw upErr;
-        photoPaths.push(path);
+        const storedPath = upData?.path ?? path;
+        photoPaths.push(storedPath);
 
-        // Signed URL so the AI edge function can fetch even though bucket is private
-        const { data: signed, error: signErr } = await supabase.storage
-          .from('submission-photos')
-          .createSignedUrl(path, 600);
-        if (signErr) throw signErr;
-        signedUrls.push(signed.signedUrl);
+        // Signed URL — retry briefly to handle storage propagation
+        let signedUrl: string | null = null;
+        let lastErr: any = null;
+        for (let attempt = 0; attempt < 4; attempt++) {
+          const { data: signed, error: signErr } = await supabase.storage
+            .from('submission-photos')
+            .createSignedUrl(storedPath, 600);
+          if (signed?.signedUrl) {
+            signedUrl = signed.signedUrl;
+            break;
+          }
+          lastErr = signErr;
+          await new Promise((r) => setTimeout(r, 300 * (attempt + 1)));
+        }
+        if (!signedUrl) throw lastErr ?? new Error('Could not sign uploaded photo URL');
+        signedUrls.push(signedUrl);
       }
 
       // 2. Call AI edge function
