@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import InventoryManager from '@/components/InventoryManager';
+import EmployeeShell from '@/components/employee/EmployeeShell';
 
 const Inventory = () => {
   const { user, isEmployee, loading } = useAuth();
@@ -35,11 +36,9 @@ const Inventory = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <EmployeeShell title="Inventory">
       <InventoryManager />
-      <Footer />
-    </div>
+    </EmployeeShell>
   );
 };
 
