@@ -9,6 +9,7 @@ import EmployeesTab, { type ManagedUser } from '@/components/admin/EmployeesTab'
 import ScheduleTab from '@/components/admin/ScheduleTab';
 import PayrollTab from '@/components/admin/PayrollTab';
 import LookingForTab from '@/components/admin/LookingForTab';
+import PermissionsTab from '@/components/admin/PermissionsTab';
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAuth();
