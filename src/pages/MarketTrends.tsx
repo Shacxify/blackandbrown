@@ -182,9 +182,7 @@ const MarketTrends = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
+    <EmployeeShell title="Market Trends">
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Title */}
@@ -751,9 +749,7 @@ const MarketTrends = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </EmployeeShell>
   );
 };
 
