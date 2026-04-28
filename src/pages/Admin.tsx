@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import EmployeeShell from '@/components/employee/EmployeeShell';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import EmployeesTab, { type ManagedUser } from '@/components/admin/EmployeesTab';
@@ -41,9 +40,8 @@ const Admin = () => {
   if (!isAdmin) return <Navigate to="/inventory" replace />;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-12 max-w-6xl">
+    <EmployeeShell title="Manager Control Panel">
+      <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="text-center mb-10">
           <h1 className="font-serif text-3xl tracking-wide uppercase mb-3">
             Manager Control Panel
@@ -75,9 +73,8 @@ const Admin = () => {
             <LookingForTab />
           </TabsContent>
         </Tabs>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </EmployeeShell>
   );
 };
 

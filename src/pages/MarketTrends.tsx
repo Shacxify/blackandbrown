@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import EmployeeShell from '@/components/employee/EmployeeShell';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -181,9 +182,7 @@ const MarketTrends = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
+    <EmployeeShell title="Market Trends">
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Title */}
@@ -750,9 +749,7 @@ const MarketTrends = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </EmployeeShell>
   );
 };
 
