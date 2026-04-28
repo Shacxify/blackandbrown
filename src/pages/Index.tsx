@@ -2,7 +2,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ProductGrid from '@/components/ProductGrid';
 import RecentlySold from '@/components/RecentlySold';
-import LocationSection from '@/components/LocationSection';
+
 import SellSection from '@/components/SellSection';
 import LookingForBanner from '@/components/LookingForBanner';
 import Footer from '@/components/Footer';
@@ -18,8 +18,7 @@ const Index = () => {
       <LookingForBanner />
       <ProductGrid products={products} loading={loading} />
       <RecentlySold />
-      <SellSection />
-      <LocationSection />
+      <SellSection>
       <Footer />
     </div>
   );
