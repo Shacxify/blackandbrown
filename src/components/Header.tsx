@@ -55,7 +55,7 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
                 Instagram
               </a>
             </div>
-            <div className="flex items-center gap-4 ml-auto">
+            <div className="hidden md:flex items-center gap-4 ml-auto">
               {user && isEmployee && (
                 <>
                   <Link to="/market-trends" className="nav-link flex items-center gap-1">
@@ -131,6 +131,27 @@ const Header = ({ mode = 'consumer', onModeChange }: HeaderProps) => {
               <Link to="/price-check" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Sell</Link>
               <Link to="/about" className="nav-link" onClick={() => setMobileMenuOpen(false)}>About</Link>
               <Link to="/contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+
+              <div className="w-12 h-px bg-border my-2" />
+
+              {user && isEmployee ? (
+                <>
+                  <Link to="/dashboard" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                  <Link to="/inventory" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Inventory</Link>
+                  <Link to="/market-trends" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Market Trends</Link>
+                  {isAdmin && (
+                    <Link to="/admin" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Admin</Link>
+                  )}
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); signOut(); }}
+                    className="nav-link"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link to="/auth" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Employee Login</Link>
+              )}
             </nav>
           </div>
         )}
