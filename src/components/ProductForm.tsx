@@ -8,7 +8,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Sparkles, Upload, X, Loader2 } from 'lucide-react';
+import { Plus, Upload, X, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { CATEGORIES, CONDITIONS, ProductCondition, ProductStatus } from '@/types/product';
 
@@ -266,8 +266,8 @@ const ProductForm = ({ onSaved }: ProductFormProps) => {
             onClick={getAiEstimate}
             disabled={estimating}
           >
-            {estimating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-            {estimating ? 'Analyzing...' : 'Get AI Price Suggestion'}
+            {estimating && <Loader2 className="h-4 w-4 animate-spin" />}
+            {estimating ? 'Analyzing...' : 'Get Price Suggestion'}
           </Button>
 
           {aiSuggestion && (

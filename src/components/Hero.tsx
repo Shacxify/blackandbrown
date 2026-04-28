@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Sparkles } from 'lucide-react';
+
 
 const Hero = () => {
   const scrollToProducts = () => {
@@ -26,8 +26,7 @@ const Hero = () => {
               Shop the Collection
             </Button>
             <Link to="/price-check">
-              <Button variant="outline" size="lg" className="gap-2">
-                <Sparkles className="h-4 w-4" />
+              <Button variant="outline" size="lg">
                 Get a Price Estimate
               </Button>
             </Link>

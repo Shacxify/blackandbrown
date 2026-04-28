@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { Upload, X, Sparkles, Loader2 } from 'lucide-react';
+import { Upload, X, Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useNavigate } from 'react-router-dom';
@@ -167,13 +167,16 @@ const PriceCheck = () => {
               Share a few details and photos. We'll send back an estimate of what your piece could be worth at Black & Brown.
               Bring it in to finalize the deal in person.
             </p>
+            <p className="text-xs text-muted-foreground/80 tracking-wide max-w-md mx-auto mt-4 italic">
+              Estimates are based on previous objective transactions and current market data. The figure shown here may not reflect the final in-store evaluation.
+            </p>
           </div>
 
           {estimate && (
             <Card className="mb-8 border-foreground">
               <CardHeader className="text-center">
-                <CardTitle className="font-serif text-xl font-light tracking-wide uppercase flex items-center justify-center gap-2">
-                  <Sparkles className="h-4 w-4" /> Your Estimate
+                <CardTitle className="font-serif text-xl font-light tracking-wide uppercase">
+                  Your Estimate
                 </CardTitle>
                 <div className="section-divider mt-4" />
               </CardHeader>
@@ -315,9 +318,12 @@ const PriceCheck = () => {
                   {submitting ? (
                     <><Loader2 className="h-4 w-4 animate-spin" /> Analyzing...</>
                   ) : (
-                    <><Sparkles className="h-4 w-4" /> Get Estimate</>
+                    <>Get Estimate</>
                   )}
                 </Button>
+                <p className="text-[11px] text-muted-foreground/80 leading-relaxed text-center pt-2">
+                  Estimate is based on previous objective transactions and local market data. The estimate from this site may not reflect the final in-store evaluation.
+                </p>
               </form>
             </CardContent>
           </Card>
